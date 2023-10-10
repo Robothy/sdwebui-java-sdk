@@ -1,0 +1,40 @@
+plugins {
+    id 'maven-publish'
+    id 'java-library'
+    id 'com.robothy.cn-repo' version '1.8'
+}
+
+group = 'io.github.robothy'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+ext {
+    jacksonVersion = '2.15.2'
+    apacheHttpClient5Version = '5.2.1'
+    junitVersion = '5.9.1'
+    lombokVersion = '1.18.22'
+}
+
+dependencies {
+    implementation "org.apache.httpcomponents.client5:httpclient5:${apacheHttpClient5Version}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    runtimeOnly "com.fasterxml.jackson.module:jackson-modules-java8:${jacksonVersion}"
+
+    // lombok
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation platform("org.junit:junit-bom:${junitVersion}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
