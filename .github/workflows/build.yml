@@ -42,3 +42,5 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           files: ./build/reports/jacoco/mergeReports/mergeReports.xml
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

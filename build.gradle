@@ -53,7 +53,7 @@ test {
     useJUnitPlatform()
 }
 
-task mergeReports(type: JacocoReport) {
+task mergeReports(type: JacocoReport, group: 'verification') {
     executionData.from(project.fileTree(dir: '.', include: '**/build/jacoco/test.exec'))
     sourceDirectories.from(project.fileTree(dir: '.', include: '**/src/main/java/**'))
     classDirectories.from(project.fileTree(dir: '.', include: '**/build/classes/java/main/**'))
