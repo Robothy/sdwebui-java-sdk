@@ -1,6 +1,15 @@
+import io.franzbecker.gradle.lombok.task.DelombokTask
+
+import java.nio.file.Files
+
+
 plugins {
-    id 'maven-publish'
     id 'java-library'
+    id 'jacoco'
+    id 'maven-publish'
+    id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id 'com.robothy.github-repository-release-plugin' version '1.1'
+    id 'signing'
     id 'com.robothy.cn-repo' version '1.8'
 }
 
@@ -35,6 +44,120 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 test {
     useJUnitPlatform()
+}
+
+task mergeReports(type: JacocoReport, group: 'verification') {
+    executionData.from(project.fileTree(dir: '.', include: '**/build/jacoco/test.exec'))
+    sourceDirectories.from(project.fileTree(dir: '.', include: '**/src/main/java/**'))
+    classDirectories.from(project.fileTree(dir: '.', include: '**/build/classes/java/main/**'))
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        //csv.required.set(true)
+    }
+}
+
+project.subprojects.each {
+    it.afterEvaluate {
+        mergeReports.dependsOn(it.tasks['test'])
+    }
+}
+
+publishing {
+
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = project.name
+            from components.java
+
+            pom {
+                name = "sdwebui-java-sdk"
+                description = 'Stable Diffusion Web UI Java SDK'
+                url = 'https://github.com/Robothy/sdwebui-java-sdk'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'robothy'
+                        name = "Fuxiang Luo"
+                        email = "robothyluo@gmail.com"
+                    }
+                }
+
+                scm {
+                    url = "https://github.com/Robothy/sdwebui-java-sdk.git"
+                }
+
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+
+        repositories {
+            mavenLocal()
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/Robothy/sdwebui-java-sdk")
+                credentials {
+                    username = project.findProperty("GITHUB_USERNAME") ?: System.getenv("GITHUB_USERNAME")
+                    password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+
+            maven {
+                name = "MavenCentral"
+                url = uri('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/')
+                credentials {
+                    username = findProperty("OSSRH_USERNAME")
+                    password = findProperty("OSSRH_PASSWORD")
+                }
+            }
+
+        }
+    }
+}
+
+
+
+task delombok(type: DelombokTask, dependsOn: compileJava) {
+    ext.outputDir = file("$buildDir/delombok")
+    outputs.dir(outputDir)
+    sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+        args(it, "-d", outputDir)
+    }
+}
+
+javadoc {
+    dependsOn delombok
+    source = delombok.outputDir
+    //failOnError = false
+}
+
+signing {
+    def signingKey
+    if (findProperty("signingKeyRingFile") != null) {
+        signingKey = Files.readString(file(findProperty("signing.secretKeyRingFile")).toPath())
+    } else {
+        signingKey = findProperty("signing.secretKey")
+    }
+    def signingPassword = findProperty("signing.password")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.maven
 }
