@@ -23,6 +23,7 @@ jobs:
         with:
           path: |
             ~/.gradle/caches
+            ~/.gradle/wrapper
           key: ${{runner.os}}-build-gradle-${{hashFiles('**/gradle-wrapper.properties')}}
 
       - name: Prepare parameters

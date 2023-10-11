@@ -64,11 +64,7 @@ task mergeReports(type: JacocoReport, group: 'verification') {
     }
 }
 
-project.subprojects.each {
-    it.afterEvaluate {
-        mergeReports.dependsOn(it.tasks['test'])
-    }
-}
+mergeReports.dependsOn(test)
 
 publishing {
 
