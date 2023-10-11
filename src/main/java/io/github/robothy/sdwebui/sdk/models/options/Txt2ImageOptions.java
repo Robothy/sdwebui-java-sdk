@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.robothy.sdwebui.sdk.enums.HiResUpscaler;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -62,7 +64,7 @@ public class Txt2ImageOptions {
 
   @Builder.Default
   @JsonProperty("styles")
-  private String[] styles = new String[]{};
+  private List<String> styles = new ArrayList<>();
 
   @Builder.Default
   @JsonProperty("seed")
@@ -162,7 +164,7 @@ public class Txt2ImageOptions {
 
   @Builder.Default
   @JsonProperty("script_args")
-  private String[] scriptArgs = new String[]{};
+  private List<String> scriptArgs = new ArrayList<>();
 
   @Builder.Default
   @JsonProperty("script_name")
