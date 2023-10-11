@@ -8,6 +8,7 @@ plugins {
     id 'jacoco'
     id 'maven-publish'
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
+    id 'com.robothy.github-repository-release-plugin' version '1.1'
     id 'signing'
     id 'com.robothy.cn-repo' version '1.8'
 }
@@ -52,6 +53,22 @@ test {
     useJUnitPlatform()
 }
 
+task mergeReports(type: JacocoReport) {
+    executionData.from(project.fileTree(dir: '.', include: '**/build/jacoco/test.exec'))
+    sourceDirectories.from(project.fileTree(dir: '.', include: '**/src/main/java/**'))
+    classDirectories.from(project.fileTree(dir: '.', include: '**/build/classes/java/main/**'))
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        //csv.required.set(true)
+    }
+}
+
+project.subprojects.each {
+    it.afterEvaluate {
+        mergeReports.dependsOn(it.tasks['test'])
+    }
+}
 
 publishing {
 
