@@ -25,7 +25,7 @@ public class Main {
       .seed(32749528)
       .build());
 
-    Path step1Path = Paths.get("txt2img-dog.png");
+    Path step1Path = Paths.get("docs/images/txt2img-dog.png");
     Files.write(step1Path, Base64.getDecoder().decode(txt2ImgResult.getImages().get(0)));
 
     Image2ImageResult image2ImageResult = sd.img2img(Image2ImageOptions.builder()
@@ -41,7 +41,7 @@ public class Main {
 
     String base64img = image2ImageResult.getImages().get(0);
 
-    Path filepath = Paths.get("img2img-dog.png");
+    Path filepath = Paths.get("docs/images/img2img-dog.png");
     Files.write(filepath, Base64.getDecoder().decode(base64img));
   }
 
