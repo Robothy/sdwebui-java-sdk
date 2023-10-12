@@ -156,8 +156,7 @@ public class Image2ImageOptions {
   private int imageCfgScale = 0;
 
   @JsonProperty("mask")
-  @Default
-  private String mask = "";
+  private String mask;
 
   @JsonProperty("mask_blur_x")
   @Default
@@ -197,6 +196,7 @@ public class Image2ImageOptions {
 
   @JsonProperty("sampler_index")
   @Default
+  @Deprecated
   private String samplerIndex = "";
 
   @JsonProperty("include_init_images")
@@ -213,7 +213,7 @@ public class Image2ImageOptions {
 
   @JsonProperty("send_images")
   @Default
-  private boolean sendImages = false;
+  private boolean sendImages = true;
 
   @JsonProperty("save_images")
   @Default

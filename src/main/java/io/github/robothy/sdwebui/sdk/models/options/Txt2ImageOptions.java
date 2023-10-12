@@ -184,6 +184,7 @@ public class Txt2ImageOptions {
 
   @Builder.Default
   @JsonProperty("sampler_index")
+  @Deprecated
   private String samplerIndex = null;
 
   @Builder.Default
