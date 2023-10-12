@@ -59,7 +59,7 @@ public class DefaultTxt2ImageService implements Txt2Image {
 
   Txt2ImgResult parseTxt2ImageResult(ClassicHttpResponse response) {
 
-    SdWebuiResponseUtils.checkResponseStatus(response, this.beanContainer.getBean(ObjectMapper.class));
+    SdWebuiResponseUtils.checkResponseStatus(response);
 
     try {
       return this.beanContainer.getBean(ObjectMapper.class)
