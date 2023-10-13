@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.robothy.sdwebui.sdk.SdWebuiBeanContainer;
 import io.github.robothy.sdwebui.sdk.Txt2Image;
+import io.github.robothy.sdwebui.sdk.models.SdWebuiOptions;
 import io.github.robothy.sdwebui.sdk.models.SystemInfo;
 import io.github.robothy.sdwebui.sdk.models.options.Txt2ImageOptions;
 import io.github.robothy.sdwebui.sdk.models.results.Txt2ImgResult;
@@ -39,8 +40,8 @@ public class DefaultTxt2ImageService implements Txt2Image {
   }
 
   ClassicHttpRequest buildTxt2ImageRequest(Txt2ImageOptions options) {
-    SystemInfo systemInfo = this.beanContainer.getBean(SystemInfo.class);
-    HttpPost httpPost = new HttpPost(systemInfo.getEndpoint() + TXT2IMG_PATH);
+    SdWebuiOptions sdWebuiOptions = this.beanContainer.getBean(SdWebuiOptions.class);
+    HttpPost httpPost = new HttpPost(sdWebuiOptions.getEndpoint() + TXT2IMG_PATH);
     HttpEntity entity = buildTxt2ImageRequestEntity(options);
     httpPost.setEntity(entity);
     httpPost.addHeader("Content-Type", "application/json");

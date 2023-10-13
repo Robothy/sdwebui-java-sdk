@@ -42,7 +42,6 @@ public class CacheableSystemInfoFetcher implements SystemInfoFetcher, SdWebuiBea
       synchronized (this) {
         if (cachedSystemInfo == null) {
           cachedSystemInfo = fetchSystemInfo();
-          cachedSystemInfo.setEndpoint(endpoint);
         }
       }
     }

@@ -2,6 +2,7 @@ package io.github.robothy.sdwebui.sdk.services;
 
 import io.github.robothy.sdwebui.sdk.Image2Image;
 import io.github.robothy.sdwebui.sdk.SdWebuiBeanContainer;
+import io.github.robothy.sdwebui.sdk.models.SdWebuiOptions;
 import io.github.robothy.sdwebui.sdk.models.SystemInfo;
 import io.github.robothy.sdwebui.sdk.models.options.Image2ImageOptions;
 import io.github.robothy.sdwebui.sdk.models.results.Image2ImageResult;
@@ -37,7 +38,7 @@ public class DefaultImage2ImageService implements Image2Image {
   }
 
   ClassicHttpRequest buildRequest(Image2ImageOptions options) {
-    String url = container.getBean(SystemInfo.class).getEndpoint() + IMG2IMG_PATH;
+    String url = container.getBean(SdWebuiOptions.class).getEndpoint() + IMG2IMG_PATH;
     ClassicHttpRequest request = new HttpPost(url);
     request.setEntity(new StringEntity(JsonUtils.toJson(options)));
     request.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");

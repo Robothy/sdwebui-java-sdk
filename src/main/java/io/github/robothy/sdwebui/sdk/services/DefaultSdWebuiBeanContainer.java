@@ -2,6 +2,7 @@ package io.github.robothy.sdwebui.sdk.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.robothy.sdwebui.sdk.*;
+import io.github.robothy.sdwebui.sdk.models.SdWebuiOptions;
 import io.github.robothy.sdwebui.sdk.models.SystemInfo;
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -14,11 +15,11 @@ public class DefaultSdWebuiBeanContainer implements SdWebuiBeanContainer {
 
   private final Map<Class<?>, Object> services;
 
-  private final String endpoint;
+  private final SdWebuiOptions sdWebuiOptions;
 
-  public DefaultSdWebuiBeanContainer(String endpoint) {
+  public DefaultSdWebuiBeanContainer(SdWebuiOptions options) {
     this.services = new HashMap<>();
-    this.endpoint = endpoint;
+    this.sdWebuiOptions = options;
     init();
   }
 
@@ -44,9 +45,10 @@ public class DefaultSdWebuiBeanContainer implements SdWebuiBeanContainer {
 
   private void init() {
     CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
+    this.services.put(SdWebuiOptions.class, sdWebuiOptions);
     this.services.put(ObjectMapper.class, new ObjectMapper());
     this.services.put(HttpClient.class, closeableHttpClient);
-    this.services.put(SystemInfo.class, new CacheableSystemInfoFetcher(endpoint, this));
+    this.services.put(SystemInfo.class, new CacheableSystemInfoFetcher(sdWebuiOptions.getEndpoint(), this));
     this.services.put(Txt2Image.class, new DefaultTxt2ImageService(this));
     this.services.put(Image2Image.class, new DefaultImage2ImageService(this));
   }

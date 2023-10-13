@@ -22,6 +22,4 @@ public class SystemInfo {
   @JsonProperty("Version")
   private String sdwebuiVersion;
 
-  private String endpoint;
-
 }

@@ -24,4 +24,13 @@ public class SdWebuiResponseUtils {
 
   }
 
+  public static <T> T parseResponse(ClassicHttpResponse response, Class<T> clazz) {
+    checkResponseStatus(response);
+    try {
+      return JsonUtils.fromJson(response.getEntity().getContent(), clazz);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 }
