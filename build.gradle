@@ -25,6 +25,7 @@ ext {
     apacheHttpClient5Version = '5.2.1'
     junitVersion = '5.9.1'
     lombokVersion = '1.18.22'
+    mockServerVersion = "5.14.0"
 }
 
 dependencies {
@@ -40,8 +41,11 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testImplementation "org.projectlombok:lombok:${lombokVersion}"
 
+    implementation "org.mock-server:mockserver-junit-jupiter-no-dependencies:${mockServerVersion}"
+
     testImplementation platform("org.junit:junit-bom:${junitVersion}")
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
 }
 
 java {

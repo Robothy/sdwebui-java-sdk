@@ -51,6 +51,8 @@ public class DefaultSdWebuiBeanContainer implements SdWebuiBeanContainer {
     this.services.put(SystemInfo.class, new CacheableSystemInfoFetcher(sdWebuiOptions.getEndpoint(), this));
     this.services.put(Txt2Image.class, new DefaultTxt2ImageService(this));
     this.services.put(Image2Image.class, new DefaultImage2ImageService(this));
+    this.services.put(CommonGetService.class, new CommonGetService(this));
+    this.services.put(GetSdModels.class, new DefaultGetSdModelService(this));
   }
 
 }
