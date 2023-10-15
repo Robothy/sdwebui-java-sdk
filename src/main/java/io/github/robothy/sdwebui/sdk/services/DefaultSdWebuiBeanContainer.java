@@ -45,14 +45,15 @@ public class DefaultSdWebuiBeanContainer implements SdWebuiBeanContainer {
 
   private void init() {
     CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
-    this.services.put(SdWebuiOptions.class, sdWebuiOptions);
-    this.services.put(ObjectMapper.class, new ObjectMapper());
-    this.services.put(HttpClient.class, closeableHttpClient);
-    this.services.put(SystemInfo.class, new CacheableSystemInfoFetcher(sdWebuiOptions.getEndpoint(), this));
-    this.services.put(Txt2Image.class, new DefaultTxt2ImageService(this));
-    this.services.put(Image2Image.class, new DefaultImage2ImageService(this));
-    this.services.put(CommonGetService.class, new CommonGetService(this));
-    this.services.put(GetSdModels.class, new DefaultGetSdModelService(this));
+    register(SdWebuiOptions.class, sdWebuiOptions);
+    register(ObjectMapper.class, new ObjectMapper());
+    register(HttpClient.class, closeableHttpClient);
+    register(SystemInfo.class, new CacheableSystemInfoFetcher(sdWebuiOptions.getEndpoint(), this));
+    register(Txt2Image.class, new DefaultTxt2ImageService(this));
+    register(Image2Image.class, new DefaultImage2ImageService(this));
+    register(CommonGetService.class, new CommonGetService(this));
+    register(GetSdModels.class, new DefaultGetSdModelService(this));
+    register(GetFaceRestorers.class, new DefaultGetFaceRestorersService(this));
   }
 
 }
