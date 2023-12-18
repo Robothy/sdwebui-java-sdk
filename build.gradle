@@ -10,7 +10,7 @@ plugins {
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
     id 'com.robothy.github-repository-release-plugin' version '1.1'
     id 'signing'
-    id 'com.robothy.cn-repo' version '1.8'
+//    id 'com.robothy.cn-repo' version '1.8'
 }
 
 group = 'io.github.robothy'

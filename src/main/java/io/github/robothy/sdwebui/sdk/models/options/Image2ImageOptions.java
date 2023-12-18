@@ -209,7 +209,7 @@ public class Image2ImageOptions {
 
   @JsonProperty("script_args")
   @Default
-  private String[] scriptArgs = {};
+  private String[] scriptArgs = new String[]{};
 
   @JsonProperty("send_images")
   @Default
