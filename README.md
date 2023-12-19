@@ -1,8 +1,29 @@
 # Stable Diffusion Webui Java SDK
 
+[![Main Branch Build](https://github.com/Robothy/sdwebui-java-sdk/actions/workflows/build.yml/badge.svg)](https://github.com/Robothy/sdwebui-java-sdk/actions/workflows/build.yml)
+[![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](https://github.com/robothy/sdwebui-java-sdk/blob/main/LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.robothy/sdwebui-java-sdk.svg)](https://search.maven.org/artifact/io.github.robothy/sdwebui-java-sdk/)
+
 sdwebui-java-sdk is a Java library  for building Java applications that integrate with [Stable Diffusion Webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui).
 
 ## Usage
+
+### Add Denendencies
+
+Maven
+
+```
+<dependency>
+    <groupId>io.github.robothy</groupId>
+    <artifactId>sdwebui-java-sdk</artifactId>
+    <version>${latest-version}</version>
+</dependency>
+```
+
+Gradle
+```
+implementation "io.github.robothy:sdwebui-java-sdk:${latest-version}"
+```
 
 ### Create `SdWebui` instance
 
